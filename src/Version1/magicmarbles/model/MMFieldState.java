@@ -1,4 +1,4 @@
-package magicmarbles.model;
+package Version1.magicmarbles.model;
 
 /**
  * The different possible states of a fields on the game board.
@@ -28,8 +28,7 @@ public enum MMFieldState {
 	
 	/** The field is empty. */
 	EMPTY {
-		public String toString(){
-			return " ";
+		public String toString() { return " ";
 		}
 	}
 	

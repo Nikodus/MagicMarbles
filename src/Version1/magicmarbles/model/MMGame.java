@@ -1,4 +1,4 @@
-package magicmarbles.model;
+package Version1.magicmarbles.model;
 
 /**
  * Definition of a magic marbles game.

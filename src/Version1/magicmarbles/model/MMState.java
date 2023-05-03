@@ -1,4 +1,4 @@
-package magicmarbles.model;
+package Version1.magicmarbles.model;
 
 /**
  * The different possible states of a game.
