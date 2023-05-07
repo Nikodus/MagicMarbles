@@ -113,7 +113,6 @@ public class MMGameImpl implements MMGame {
 
 			}
 
-
 		}
 
 		public void clearField(int row, int col){
