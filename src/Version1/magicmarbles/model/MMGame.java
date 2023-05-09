@@ -42,7 +42,7 @@ public interface MMGame {
 	 * @return The state of the specified field.
 	 */
 	public MMFieldState getFieldState(int row, int col);
-
+	public MMFieldState getFieldState(int row, int col, int[][] Field);
 
 	/**
 	 * Selects the specified field. 

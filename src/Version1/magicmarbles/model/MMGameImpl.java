@@ -69,8 +69,6 @@ public class MMGameImpl implements MMGame {
 
 	@Override
 	public MMFieldState getFieldState(int row, int col) {
-
-
 		if(Gamefield[row][col] == 0)return MMFieldState.RED;
 		if(Gamefield[row][col] == 1)return MMFieldState.GREEN;
 		if(Gamefield[row][col] == 2)return MMFieldState.BLUE;
@@ -78,11 +76,22 @@ public class MMGameImpl implements MMGame {
 		return MMFieldState.EMPTY;
 	}
 
-	public void setFieldState(int row, int col, MMFieldState state) {
-		if(state == MMFieldState.RED) Gamefield[row][col] = 0;
-		if(state == MMFieldState.GREEN) Gamefield[row][col] = 1;
-		if(state == MMFieldState.BLUE) Gamefield[row][col] = 2;
-		if(state == MMFieldState.EMPTY) Gamefield[row][col] = 3;
+	@Override
+	public MMFieldState getFieldState(int row, int col, int[][] Field) {
+
+
+		if(Field[row][col] == 0)return MMFieldState.RED;
+		if(Field[row][col] == 1)return MMFieldState.GREEN;
+		if(Field[row][col] == 2)return MMFieldState.BLUE;
+
+		return MMFieldState.EMPTY;
+	}
+
+	public void setFieldState(int row, int col, int[][] Field,MMFieldState state) {
+		if(state == MMFieldState.RED) Field[row][col] = 0;
+		if(state == MMFieldState.GREEN) Field[row][col] = 1;
+		if(state == MMFieldState.BLUE) Field[row][col] = 2;
+		if(state == MMFieldState.EMPTY) Field[row][col] = 3;
 
 
 	}
@@ -91,11 +100,24 @@ public class MMGameImpl implements MMGame {
 
 	@Override
 	public void select(int row, int col) throws MMException {
-		if(getFieldState(row, col) == MMFieldState.EMPTY) throw new MMException();
-		MMFieldClear clear = new MMFieldClear(MMFieldState.EMPTY,row,col);
+		if(getFieldState(row, col, Gamefield) == MMFieldState.EMPTY) throw new MMException();
+		MMFieldClear clear = new MMFieldClear(MMFieldState.EMPTY,row,col,Gamefield);
 		clear.moveEmpty();
 		win = clear.checkWin();
-		score = score + (clear.getClearedfields() * clear.getClearedfields());
+		if(clear.getClearedfields() != 1)
+		{
+			score = score + (clear.getClearedfields() * clear.getClearedfields());
+		}
+		else{throw new MMException();}
+
+		int negscore = clear.isMovePossible();
+
+		if(negscore==-1);
+		else{
+			score = score - (10*negscore);
+			win = true;
+		}
+
 	}
 
 
@@ -104,57 +126,57 @@ public class MMGameImpl implements MMGame {
 		private MMFieldState colorstate;
 		private int clearedfields;
 
-		public MMFieldClear(MMFieldState colorstate, int row, int col) throws MMException {
-			if(getFieldState(row, col) != MMFieldState.EMPTY)
+		public MMFieldClear(MMFieldState colorstate, int row, int col, int[][] Field) throws MMException {
+			if(getFieldState(row, col, Field) != MMFieldState.EMPTY)
 			{
 				this.colorstate = colorstate;
 				clearedfields = 1;
-				clearField(row, col);
+				clearField(row, col, Field);
 
 			}
 
 		}
 
-		public void clearField(int row, int col){
+		public void clearField(int row, int col, int[][] Field){
 
 
 			try {
-				if ((getFieldState(row, col) == getFieldState(row - 1, col) || colorstate == getFieldState(row - 1, col)) && getFieldState(row - 1, col) != MMFieldState.EMPTY) {
-					setFieldState(row, col, MMFieldState.EMPTY);
-					clearField(row - 1, col);
-					if(getFieldState(row-1, col) != MMFieldState.EMPTY)this.colorstate = getFieldState(row-1, col);
-					setFieldState(row-1, col, MMFieldState.EMPTY);
+				if ((getFieldState(row, col,Field) == getFieldState(row - 1, col, Field) || colorstate == getFieldState(row - 1, col,Field)) && getFieldState(row - 1, col,Field) != MMFieldState.EMPTY) {
+					setFieldState(row, col,Field, MMFieldState.EMPTY);
+					clearField(row - 1, col,Field);
+					if(getFieldState(row-1, col,Field) != MMFieldState.EMPTY)this.colorstate = getFieldState(row-1, col,Field);
+					setFieldState(row-1, col,Field ,MMFieldState.EMPTY);
 					clearedfields++;
 				}
 			}
 			catch (IndexOutOfBoundsException e){};
 			try {
-				if((getFieldState(row,col) == getFieldState(row,col-1) || colorstate == getFieldState(row, col-1)) && getFieldState(row,col-1) != MMFieldState.EMPTY)
+				if((getFieldState(row,col,Field) == getFieldState(row,col-1,Field) || colorstate == getFieldState(row, col-1,Field)) && getFieldState(row,col-1,Field) != MMFieldState.EMPTY)
 				{
-					setFieldState(row,col,MMFieldState.EMPTY);
-					clearField(row,col-1);
-					if(getFieldState(row, col-1) != MMFieldState.EMPTY)this.colorstate = getFieldState(row, col-1);
-					setFieldState(row,col-1,MMFieldState.EMPTY);
+					setFieldState(row,col,Field,MMFieldState.EMPTY);
+					clearField(row,col-1,Field);
+					if(getFieldState(row, col-1,Field) != MMFieldState.EMPTY)this.colorstate = getFieldState(row, col-1,Field);
+					setFieldState(row,col-1,Field,MMFieldState.EMPTY);
 					clearedfields++;
 				}
 			}catch (IndexOutOfBoundsException e){};
 			try {
-				if((getFieldState(row, col) == getFieldState(row+1,col) || colorstate == getFieldState(row + 1, col)) && getFieldState(row+1,col) != MMFieldState.EMPTY)
+				if((getFieldState(row, col,Field) == getFieldState(row+1,col,Field) || colorstate == getFieldState(row + 1, col,Field)) && getFieldState(row+1,col,Field) != MMFieldState.EMPTY)
 				{
-					setFieldState(row,col,MMFieldState.EMPTY);
-					clearField(row+1,col);
-					if(getFieldState(row+1, col) != MMFieldState.EMPTY)this.colorstate = getFieldState(row+1, col);
-					setFieldState(row+1,col,MMFieldState.EMPTY);
+					setFieldState(row,col,Field,MMFieldState.EMPTY);
+					clearField(row+1,col,Field);
+					if(getFieldState(row+1, col,Field) != MMFieldState.EMPTY)this.colorstate = getFieldState(row+1, col,Field);
+					setFieldState(row+1,col,Field,MMFieldState.EMPTY);
 					clearedfields++;
 				}
 			}catch (IndexOutOfBoundsException e){};
 			try {
-				if((getFieldState(row,col) == getFieldState(row,col+1) || colorstate == getFieldState(row, col+1))  && getFieldState(row,col+1) != MMFieldState.EMPTY)
+				if((getFieldState(row,col,Field) == getFieldState(row,col+1,Field) || colorstate == getFieldState(row, col+1,Field))  && getFieldState(row,col+1,Field) != MMFieldState.EMPTY)
 				{
-					setFieldState(row,col,MMFieldState.EMPTY);
-					clearField(row,col+1);
-					if(getFieldState(row, col+1) != MMFieldState.EMPTY)this.colorstate = getFieldState(row, col+1);
-					setFieldState(row,col+1,MMFieldState.EMPTY);
+					setFieldState(row,col,Field,MMFieldState.EMPTY);
+					clearField(row,col+1,Field);
+					if(getFieldState(row, col+1,Field) != MMFieldState.EMPTY)this.colorstate = getFieldState(row, col+1,Field);
+					setFieldState(row,col+1,Field,MMFieldState.EMPTY);
 					clearedfields++;
 				}
 			}catch (IndexOutOfBoundsException e){};
@@ -163,6 +185,9 @@ public class MMGameImpl implements MMGame {
 		}
 
 		//	3x4 Field
+		//
+		//			Access: Array[y][x]
+		//
 		//				 x-Axis  <-> (column) (Width)
 		//				   0  1  2  3
 		//	^			0  r  g  b  r
@@ -182,8 +207,8 @@ public class MMGameImpl implements MMGame {
 					{
 						if(Gamefield[i][x] == 3)
 						{
-							setFieldState(i,x,getFieldState(i-1,x));
-							setFieldState(i-1,x,MMFieldState.EMPTY);
+							setFieldState(i,x,Gamefield,getFieldState(i-1,x,Gamefield));
+							setFieldState(i-1,x,Gamefield,MMFieldState.EMPTY);
 						}
 					}
 				}
@@ -216,12 +241,12 @@ public class MMGameImpl implements MMGame {
 			}
 		}
 
-		public boolean checkWin() throws MMException {
+		public boolean checkWin(){
 			{
 				boolean win = true;
 				for (int x = 0; x < Gamefield.length; x++) {
 					for (int y = 0; y < Gamefield[0].length; y++) {
-						if(getFieldState(y,x) != MMFieldState.EMPTY)
+						if(getFieldState(x,y,Gamefield) != MMFieldState.EMPTY)
 						{
 							win = false;
 						}
@@ -233,6 +258,29 @@ public class MMGameImpl implements MMGame {
 
 		public int getClearedfields() {
 			return clearedfields;
+		}
+
+		public int isMovePossible()
+		{
+			int count = 0;
+			int[][] Dummyfield = new int[Gamefield.length][Gamefield[0].length];
+			for (int i = 0; i < Dummyfield.length; i++) {
+				Dummyfield[i] = Arrays.copyOf(Gamefield[i],Gamefield[i].length);
+			}
+			for (int x = 0; x < Dummyfield.length; x++) {
+				for (int y = 0; y < Dummyfield[0].length; y++) {
+					try{
+						if(getFieldState(x,y,Dummyfield) == MMFieldState.EMPTY)continue;
+						MMFieldClear Dummyclear = new MMFieldClear(MMFieldState.EMPTY,x,y,Dummyfield);
+						if(Dummyclear.clearedfields>1)return -1;
+						else count++;
+					}catch (MMException e){
+
+					}
+				}
+			}
+			return count;
+
 		}
 	}
 }
