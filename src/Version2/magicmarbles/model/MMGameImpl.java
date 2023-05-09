@@ -1,6 +1,6 @@
-package Version1.magicmarbles.model;
+package Version2.magicmarbles.model;
 
-import Version1.inout.In;
+import Version2.inout.In;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;

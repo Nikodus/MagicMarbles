@@ -1,4 +1,4 @@
-package Version1.magicmarbles.model;
+package Version2.magicmarbles.model;
 
 /**
  * The exception class for exceptions with the magic marble game

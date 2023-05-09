@@ -1,12 +1,12 @@
-package Version1.magicmarbles.textui;
+package Version2.magicmarbles.textui;
 
-import Version1.inout.In;
-import Version1.inout.Out;
-import Version1.magicmarbles.model.MMException;
-import Version1.magicmarbles.model.MMFieldState;
-import Version1.magicmarbles.model.MMGame;
-import Version1.magicmarbles.model.MMGameImpl;
-import Version1.magicmarbles.model.MMState;
+import Version2.inout.In;
+import Version2.inout.Out;
+import Version2.magicmarbles.model.MMException;
+import Version2.magicmarbles.model.MMFieldState;
+import Version2.magicmarbles.model.MMGame;
+import Version2.magicmarbles.model.MMGameImpl;
+import Version2.magicmarbles.model.MMState;
 
 public class Main {
 	

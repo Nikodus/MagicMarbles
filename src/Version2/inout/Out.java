@@ -1,4 +1,4 @@
-package Version1.inout;
+package Version2.inout;
 
 import java.io.FileOutputStream;
 import java.io.PrintStream;

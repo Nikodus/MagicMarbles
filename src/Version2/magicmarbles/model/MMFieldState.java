@@ -1,4 +1,4 @@
-package Version1.magicmarbles.model;
+package Version2.magicmarbles.model;
 
 /**
  * The different possible states of a fields on the game board.
