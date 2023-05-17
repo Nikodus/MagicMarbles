@@ -67,6 +67,11 @@ public class MMGameImpl implements MMGame {
 		return score;
 	}
 
+	public void setGamePoints(int score)
+	{
+		this.score = score;
+	}
+
 	@Override
 	public MMFieldState getFieldState(int row, int col) {
 		if(Gamefield[row][col] == 0)return MMFieldState.RED;
@@ -92,8 +97,13 @@ public class MMGameImpl implements MMGame {
 		if(state == MMFieldState.GREEN) Field[row][col] = 1;
 		if(state == MMFieldState.BLUE) Field[row][col] = 2;
 		if(state == MMFieldState.EMPTY) Field[row][col] = 3;
+	}
 
-
+	public void setFieldState(int row, int col ,MMFieldState state) {
+		if(state == MMFieldState.RED) Gamefield[row][col] = 0;
+		if(state == MMFieldState.GREEN) Gamefield[row][col] = 1;
+		if(state == MMFieldState.BLUE) Gamefield[row][col] = 2;
+		if(state == MMFieldState.EMPTY) Gamefield[row][col] = 3;
 	}
 
 
