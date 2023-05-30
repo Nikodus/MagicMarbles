@@ -18,7 +18,6 @@ public class MMGameModel {
     {
         this.Game = new MMGameImpl(width,height);
         Game.setGamePoints(0);
-        fieldChangeEvent();
     }
 
     public MMGame getGame() {
@@ -68,7 +67,7 @@ public class MMGameModel {
         return Game.getGameState();
     }
 
-    private void fieldChangeEvent() {
+    public void fieldChangeEvent() {
         MMGameEvent evt = new MMGameEvent(this);
         for (MMGameListener l : listeners) {
             l.FieldChanged(evt);

@@ -104,11 +104,8 @@ public class MMGameImpl implements MMGame {
 		MMFieldClear clear = new MMFieldClear(MMFieldState.EMPTY,row,col,Gamefield);
 		clear.moveEmpty();
 		win = clear.checkWin();
-		if(clear.getClearedfields() != 1)
-		{
-			score = score + (clear.getClearedfields() * clear.getClearedfields());
-		}
-		else{throw new MMException();}
+		if(clear.getClearedfields() != 1) score = score + (clear.getClearedfields() * clear.getClearedfields());
+		else throw new MMException();
 
 		int negscore = clear.isMovePossible();
 

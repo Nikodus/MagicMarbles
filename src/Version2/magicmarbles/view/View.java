@@ -27,7 +27,7 @@ public class View extends JFrame {
     private void start()
     {
         setTitle("MagicMarbles");
-        setSize(300,300);
+        setSize(500,500);
         setVisible(true);
         setResizable(false);
         setLocation(100,100);
@@ -61,8 +61,8 @@ public class View extends JFrame {
     {
         super.paint(g);
 
-        for (int i = 0; i < 5; i++) {
-            for (int i1 = 0; i1 < 7; i1++) {
+        for (int i = 0; i < 10; i++) {
+            for (int i1 = 0; i1 < 12; i1++) {
                 g.setColor(new Color(0xFF0000));
                 g.fillOval((10+(i1*40)),(60+(i*40)),40,40);
             }

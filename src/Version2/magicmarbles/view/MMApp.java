@@ -2,6 +2,7 @@ package Version2.magicmarbles.view;
 
 import Version2.magicmarbles.model.*;
 import Version2.magicmarbles.view.PixelHelper;
+import com.sun.media.sound.SF2Region;
 
 import javax.swing.*;
 import java.awt.*;
@@ -88,8 +89,13 @@ public class MMApp {
         this.width = tmp[0];
         this.height = tmp[1];
 
+        model.reset(width, height);
+
+        frame.remove(paintPanel);
+
         paintPanel = createPaintPanel();
         paintPanel.setPlayground();
+        frame.add(paintPanel);
         frame.setVisible(false);
         frame.pack();
         frame.setLocationRelativeTo(null);
@@ -97,7 +103,8 @@ public class MMApp {
         frame.repaint();
         frame.setVisible(true);
 
-        model.reset(width, height);
+        model.fieldChangeEvent();
+
     }
 
     public void updatePoints(int p) {
